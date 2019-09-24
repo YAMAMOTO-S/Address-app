@@ -5,7 +5,10 @@
       <v-toolbar-title class="headline text-uppercase">
         <span>My address</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>   
+      <v-spacer></v-spacer>
+      <v-toolbar-items v-if="$store.state.login_user">
+        <v-btn @click='logout'>Logout</v-btn>  
+      </v-toolbar-items> 
     </v-toolbar>
     <SideNav/>
 
@@ -18,19 +21,27 @@
 <script>
 import { mapActions } from 'vuex'
 import SideNav from './components/SideNav'
+import firebase from 'firebase'
 
 export default {
   name: 'App',
-
   components: {
     SideNav
   },
-
+  created(){
+    firebase.auth().onAuthStateChanged(user => {
+      if(user) {
+        this.setLoginUser(user)
+      } else {
+        this.deleteLoginUser()
+      }
+    })
+  },
   data: () => ({
     //
   }),
   methods: {
-       ...mapActions(['toggleSideMenu'])
+       ...mapActions(['toggleSideMenu', 'setLoginUser', 'logout', 'deleteLoginUser'])
   }
 };
 </script>
