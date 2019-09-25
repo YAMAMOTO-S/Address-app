@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       items: [
-        { title: 'HOME', icon: 'home', link: {name: 'home'} },
+        
         { title: 'Contact list', icon: 'list', link: {name: 'addresses'}}
       ]
     }

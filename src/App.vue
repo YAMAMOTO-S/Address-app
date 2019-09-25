@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-toolbar-side-icon @click="toggleSideMenu"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="toggleSideMenu" v-show="$store.state.login_user"></v-toolbar-side-icon>
       <v-toolbar-title class="headline text-uppercase">
         <span>My address</span>
       </v-toolbar-title>
@@ -32,8 +32,10 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if(user) {
         this.setLoginUser(user)
+        if (this.$router.currentRoute.name === 'home') this.$router.push({ name: 'addresses'}) 
       } else {
         this.deleteLoginUser()
+        this.$router.push({name: 'home'})
       }
     })
   },
